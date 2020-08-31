@@ -1,6 +1,6 @@
 debug = False
-runonce = False
-waitstart = True
+runonce = True
+waitstart = False
 from pynput.mouse import Button, Controller
 import time
 import numpy as np
@@ -18,7 +18,7 @@ while(z):
         a = datetime.datetime.now()
         screen = np.array(ImageGrab.grab(bbox=(0,0,2560,1600)))
         screen = cv2.resize(screen,(1024,640))
-        print("new Screen saved")
+        #print("new Screen saved")
         v = screen[500,500]
         if(v[0]!=255):
             h=False
@@ -28,40 +28,25 @@ while(z):
     positions = []
     valuen = 0
     #mouse.position = (1440,900)
-    for x in range(280, 640):
-        #print(x)
-        for y in range(325, 824):
-            value = screen[x, y]
+    positions = np.where(screen == [249])
+    listOfCoordinates = list(zip(positions[0], positions[1]))
+    #print(listOfCoordinates)
+    solutions = []
+    for i in range(len(listOfCoordinates)):
+        l = listOfCoordinates[i]
+        p = screen[l[0],l[1]]
+        if(p[0] == 249):
+            if (p[1] == 220):
+                #if (p[2] == 198):
+                #if(p == [249,220,198,255]):
+                #print(p)
+                #screen[l[0], l[1]] = [0, 0, 0, 255]
+                solutions.append(l)
 
-            #time.sleep(0.000001)
-            #print(value)
-            if (value[0] == 249):
-                #print(value[0])
-                if (value[1] == 220):
-                    #if(value[2]==198):
-                    #print(value)
-                    #print(x, y)
-                    positions.append((int(x),int(y)))
-                    #screen[x, y] = [0, 0, 0, 255]
 
-    print(positions)
     b = datetime.datetime.now()
     print(b-a)
-    #for i in range(len(positions)):
-    if(len(positions)!=0):
-        for f in range(len(positions)):
-            c = positions[f]
-            value = screen[c[0],c[1]]
-            #mouse.position = positions[0]
-            #time.sleep(0.5)
-            #print(screen[c[0],c[1]])
-            #print(c[0],c[1])
-            mouse.position = (c[1]*2.232*0.5625,c[0]*2.232*0.5625)
-            mp = mouse.position
-            mouse.click(Button.left, 1)
-            #print(mouse.position)
-            #print(mp[0]/2.23*1.77777777778,mp[1]/2.23*1.77777777778)
-            screen[c[0], c[1]] = [255, 255, 255, 255]
+    #for i in range(len(positions))
     if(debug):
         cv2.imshow('window', cv2.cvtColor(screen, cv2.COLOR_BGR2RGB))
         cv2.waitKey(0)
