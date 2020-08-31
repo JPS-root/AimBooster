@@ -1,5 +1,6 @@
 debug = False
 runonce = False
+waitstart = True
 from pynput.mouse import Button, Controller
 import time
 import numpy as np
@@ -21,13 +22,15 @@ while(z):
         v = screen[500,500]
         if(v[0]!=255):
             h=False
+        if(waitstart == False):
+            h=False
     h=True
     positions = []
     valuen = 0
     #mouse.position = (1440,900)
-    for x in range(0, 640):
+    for x in range(280, 640):
         #print(x)
-        for y in range(0, 1024):
+        for y in range(325, 824):
             value = screen[x, y]
 
             #time.sleep(0.000001)
@@ -36,10 +39,10 @@ while(z):
                 #print(value[0])
                 if (value[1] == 220):
                     #if(value[2]==198):
-                    print(value)
+                    #print(value)
                     #print(x, y)
                     positions.append((int(x),int(y)))
-                    screen[x, y] = [0, 0, 0, 255]
+                    #screen[x, y] = [0, 0, 0, 255]
 
     print(positions)
     b = datetime.datetime.now()
