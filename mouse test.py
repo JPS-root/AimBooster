@@ -1,6 +1,6 @@
 debug = False
-runonce = True
-waitstart = False
+runonce = False
+waitstart = True
 from pynput.mouse import Button, Controller
 import time
 import numpy as np
@@ -43,9 +43,22 @@ while(z):
                 #screen[l[0], l[1]] = [0, 0, 0, 255]
                 solutions.append(l)
 
-
     b = datetime.datetime.now()
     print(b-a)
+    if (len(solutions) != 0):
+        for f in range(len(solutions)):
+            c = solutions[f]
+            value = screen[c[0], c[1]]
+            # mouse.position = positions[0]
+            # time.sleep(0.5)
+            # print(screen[c[0],c[1]])
+            # print(c[0],c[1])
+            mouse.position = (c[1] * 2.232 * 0.5625, c[0] * 2.232 * 0.5625)
+            mp = mouse.position
+            mouse.click(Button.left, 1)
+            # print(mouse.position)
+            # print(mp[0]/2.23*1.77777777778,mp[1]/2.23*1.77777777778)
+            screen[c[0], c[1]] = [255, 255, 255, 255]
     #for i in range(len(positions))
     if(debug):
         cv2.imshow('window', cv2.cvtColor(screen, cv2.COLOR_BGR2RGB))
